@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#000">
+  <meta name="description" content="清醒 识趣 努力 优秀 不负余生🍃">
+  <meta name="author" content="karma">
+  <meta name="keywords" content="">
+  <title>Nacos配置中心及注册中心 - Karma の 小屋</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karma の Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-05-31 10:01">
+      2020年5月31日 上午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-post-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h3 id="Nacos整合SpringCloud"><a href="#Nacos整合SpringCloud" class="headerlink" title="Nacos整合SpringCloud"></a>Nacos整合SpringCloud</h3><p><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba/tree/master/spring-cloud-alibaba-examples/nacos-example" target="_blank" rel="noopener">https://github.com/spring-cloud-incubator/spring-cloud-alibaba/tree/master/spring-cloud-alibaba-examples/nacos-example</a></p>
+<h4 id="1-什么是Nacos？"><a href="#1-什么是Nacos？" class="headerlink" title="1.什么是Nacos？"></a>1.什么是Nacos？</h4><blockquote>
+<p><a href="https://github.com/alibaba/Nacos" target="_blank" rel="noopener">Nacos</a> 是阿里巴巴开源的一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+</blockquote>
+<h4 id="2-Nacos-Config整合"><a href="#2-Nacos-Config整合" class="headerlink" title="2.Nacos Config整合"></a>2.Nacos Config整合</h4><blockquote>
+<p>Nacos Config Starter实现Spring Cloud应用程序的外部化配置。</p>
+</blockquote>
+<h5 id="2-1-启动-Nacos-Server-并添加配置"><a href="#2-1-启动-Nacos-Server-并添加配置" class="headerlink" title="2.1 启动 Nacos Server 并添加配置"></a>2.1 启动 Nacos Server 并添加配置</h5><blockquote>
+<p>1.下载地址：</p>
+<ol>
+<li>直接下载：<a href="https://github.com/alibaba/nacos/releases" target="_blank" rel="noopener">Nacos Server 下载页</a></li>
+<li>源码构建：<a href="https://github.com/alibaba/nacos" target="_blank" rel="noopener">Github 项目页面</a></li>
+</ol>
+<p>2.启动</p>
+<ol>
+<li>Linux/Unix/Mac 操作系统，执行命令 <code>sh startup.sh -m standalone</code></li>
+<li>Windows 操作系统，执行命令 <code>cmd startup.cmd</code></li>
+<li>默认账户密码：nacos</li>
+</ol>
+<p>3.在命令行执行如下命令，向 Nacos Server 中添加一条配置，也可在控制台中手动添加。</p>
+<pre><code class="hljs shell">curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos-config-example.properties&amp;group=DEFAULT_GROUP&amp;content=user.id=1%0Auser.name=james%0Auser.age=17"</code></pre>
+
+<p>添加的配置的详情如下</p>
+<pre><code class="hljs properties"><span class="hljs-attr">dataId</span> <span class="hljs-string">为 nacos-config-example.properties</span>
+<span class="hljs-attr">group</span> <span class="hljs-string">为 DEFAULT_GROUP</span>
+
+<span class="hljs-attr">内容如下</span>
+
+	<span class="hljs-meta">user.id</span>=<span class="hljs-string">1</span>
+	<span class="hljs-meta">user.name</span>=<span class="hljs-string">james</span>
+	<span class="hljs-meta">user.age</span>=<span class="hljs-string">17	</span></code></pre>
+
+<p>访问：<a href="http://localhost:8848/nacos" target="_blank" rel="noopener">http://localhost:8848/nacos</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20190603110735458.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDgyNjM0OQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+</blockquote>
+<h5 id="2-1-引入pom文件"><a href="#2-1-引入pom文件" class="headerlink" title="2.1 引入pom文件"></a>2.1 引入pom文件</h5><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+
+<h5 id="2-2-添加bootstrap-properties"><a href="#2-2-添加bootstrap-properties" class="headerlink" title="2.2 添加bootstrap.properties"></a>2.2 添加bootstrap.properties</h5><pre><code class="hljs properties"><span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">nacos-config-example</span>
+<span class="hljs-meta">spring.cloud.nacos.config.server-addr</span>=<span class="hljs-string">ip:8848 #服务器ip或本地ip</span></code></pre>
+
+<h5 id="2-3-获取相应的配置"><a href="#2-3-获取相应的配置" class="headerlink" title="2.3 获取相应的配置"></a>2.3 获取相应的配置</h5><pre><code class="hljs java"><span class="hljs-meta">@RefreshScope</span> <span class="hljs-comment">//打开动态刷新功能</span>
+ <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SampleController</span> </span>&#123;
+
+ 	<span class="hljs-meta">@Value</span>(<span class="hljs-string">"$&#123;user.name&#125;"</span>)
+ 	String userName;
+
+ 	<span class="hljs-meta">@Value</span>(<span class="hljs-string">"$&#123;user.age&#125;"</span>)
+ 	<span class="hljs-keyword">int</span> age;
+ &#125;</code></pre>
+
+<h5 id="2-4-应用启动"><a href="#2-4-应用启动" class="headerlink" title="2.4 应用启动"></a>2.4 应用启动</h5><blockquote>
+<p>1.添加/application.properties </p>
+<pre><code class="hljs properties"><span class="hljs-meta">server.port</span>=<span class="hljs-string">18084</span>
+<span class="hljs-meta">management.endpoints.web.exposure.include</span>=<span class="hljs-string">*</span></code></pre>
+
+<p>2.App启动<br><img src="https://img-blog.csdnimg.cn/20190603120015889.png" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+</blockquote>
+<h5 id="2-5-原理"><a href="#2-5-原理" class="headerlink" title="2.5 原理"></a>2.5 原理</h5><blockquote>
+<h4 id="1-Nacos-Config-数据结构"><a href="#1-Nacos-Config-数据结构" class="headerlink" title="1.Nacos Config 数据结构"></a>1.Nacos Config 数据结构</h4><p>Nacos Config 主要通过 dataId 和 group 来唯一确定一条配置.</p>
+<p>Nacos Client 从 Nacos Server 端获取数据时，调用的是此接口 <code>ConfigService.getConfig(String dataId, String group, long timeoutMs)</code>。</p>
+<h4 id="2-Spring-Cloud-应用获取数据"><a href="#2-Spring-Cloud-应用获取数据" class="headerlink" title="2.Spring Cloud 应用获取数据"></a>2.Spring Cloud 应用获取数据</h4><h5 id="dataId"><a href="#dataId" class="headerlink" title="dataId"></a>dataId</h5><p>在 Nacos Config Starter 中，dataId 的拼接格式如下</p>
+<pre><code class="hljs properties"><span class="hljs-meta">$&#123;prefix&#125;</span> <span class="hljs-string">- $&#123;spring.profiles.active&#125; . $&#123;file-extension&#125;</span></code></pre>
+
+<ul>
+<li><p><code>prefix</code> 默认为 <code>spring.application.name</code> 的值，也可以通过配置项 <code>spring.cloud.nacos.config.prefix</code>来配置。</p>
+</li>
+<li><p><code>spring.profiles.active</code> 即为当前环境对应的 profile，详情可以参考 <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles" target="_blank" rel="noopener">Spring Boot文档</a></p>
+<p><strong>注意，当 activeprofile 为空时，对应的连接符 - 也将不存在，dataId 的拼接格式变成 ${prefix}.${file-extension}</strong></p>
+</li>
+<li><p><code>file-extension</code> 为配置内容的数据格式，可以通过配置项 <code>spring.cloud.nacos.config.file-extension</code>来配置。 目前只支持 <code>properties</code> 类型。</p>
+</li>
+</ul>
+<h5 id="group"><a href="#group" class="headerlink" title="group"></a>group</h5><ul>
+<li><code>group</code> 默认为 <code>DEFAULT_GROUP</code>，可以通过 <code>spring.cloud.nacos.config.group</code> 配置。</li>
+</ul>
+<h4 id="3-自动注入"><a href="#3-自动注入" class="headerlink" title="3.自动注入"></a>3.自动注入</h4><p>Nacos Config Starter 实现了 <code>org.springframework.cloud.bootstrap.config.PropertySourceLocator</code>接口，并将优先级设置成了最高。</p>
+<p>在 Spring Cloud 应用启动阶段，会主动从 Nacos Server 端获取对应的数据，并将获取到的数据转换成 PropertySource 且注入到 Environment 的 PropertySources 属性中，所以使用 @Value 注解也能直接获取 Nacos Server 端配置的内容。</p>
+<h4 id="4-动态刷新"><a href="#4-动态刷新" class="headerlink" title="4.动态刷新"></a>4.动态刷新</h4><p>Nacos Config Starter 默认为所有获取数据成功的 Nacos 的配置项添加了监听功能，在监听到服务端配置发生变化时会实时触发 <code>org.springframework.cloud.context.refresh.ContextRefresher</code> 的 refresh 方法 。</p>
+<p>如果需要对 Bean 进行动态刷新，给类添加 <code>@RefreshScope</code> 或 <code>@ConfigurationProperties</code>注解。</p>
+<h4 id="5-Endpoint-信息查看"><a href="#5-Endpoint-信息查看" class="headerlink" title="5.Endpoint 信息查看"></a>5.Endpoint 信息查看</h4><p>Springboot支持这一点，Nacos Config也同时可以使用Endpoint来暴露信息。</p>
+<p>在maven 中添加 <code>spring-boot-starter-actuator</code>依赖，并在配置中允许 Endpoints 的访问。</p>
+<ul>
+<li>Spring Boot 1.x 中添加配置 management.security.enabled=false</li>
+<li>Spring Boot 2.x 中添加配置 management.endpoints.web.exposure.include=*</li>
+</ul>
+<p>Spring Boot 1.x 可以通过访问 <a href="http://127.0.0.1:18084/nacos_config" target="_blank" rel="noopener">http://127.0.0.1:18084/nacos_config</a> 来查看 Nacos Endpoint 的信息。</p>
+<p>Spring Boot 2.x 可以通过访问 <a href="http://127.0.0.1:18084/actuator/nacos-config" target="_blank" rel="noopener">http://127.0.0.1:18084/actuator/nacos-config</a> 来访问。<br><img src="https://img-blog.csdnimg.cn/20190603121130239.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDgyNjM0OQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+</blockquote>
+<h5 id="2-6-更多"><a href="#2-6-更多" class="headerlink" title="2.6 更多"></a>2.6 更多</h5><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置项</td>
+<td>key</td>
+<td>默认值</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>服务端地址</td>
+<td>spring.cloud.nacos.config.server-addr</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DataId前缀</td>
+<td>spring.cloud.nacos.config.prefix</td>
+<td></td>
+<td>spring.application.name</td>
+</tr>
+<tr>
+<td>Group</td>
+<td>spring.cloud.nacos.config.group</td>
+<td>DEFAULT_GROUP</td>
+<td></td>
+</tr>
+<tr>
+<td>dataID后缀及内容文件格式</td>
+<td>spring.cloud.nacos.config.file-extension</td>
+<td>properties</td>
+<td>dataId的后缀，同时也是配置内容的文件格式，目前只支持 properties</td>
+</tr>
+<tr>
+<td>配置内容的编码方式</td>
+<td>spring.cloud.nacos.config.encode</td>
+<td>UTF-8</td>
+<td>配置的编码</td>
+</tr>
+<tr>
+<td>获取配置的超时时间</td>
+<td>spring.cloud.nacos.config.timeout</td>
+<td>3000</td>
+<td>单位为 ms</td>
+</tr>
+<tr>
+<td>配置的命名空间</td>
+<td>spring.cloud.nacos.config.namespace</td>
+<td></td>
+<td>常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源隔离等。</td>
+</tr>
+<tr>
+<td>AccessKey</td>
+<td>spring.cloud.nacos.config.access-key</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SecretKey</td>
+<td>spring.cloud.nacos.config.secret-key</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>相对路径</td>
+<td>spring.cloud.nacos.config.context-path</td>
+<td></td>
+<td>服务端 API 的相对路径</td>
+</tr>
+<tr>
+<td>接入点</td>
+<td>spring.cloud.nacos.config.endpoint</td>
+<td>UTF-8</td>
+<td>地域的某个服务的入口域名，通过此域名可以动态地拿到服务端地址</td>
+</tr>
+<tr>
+<td>是否开启监听和自动刷新</td>
+<td>spring.cloud.nacos.config.refresh.enabled</td>
+<td>true</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="3-Nacos-Discovery-整合"><a href="#3-Nacos-Discovery-整合" class="headerlink" title="3.Nacos Discovery 整合"></a>3.Nacos Discovery 整合</h4><blockquote>
+<p>Nacos Discovery Starter 完成 Spring Cloud 应用的服务注册与发现。</p>
+</blockquote>
+<h5 id="3-1-添加依赖"><a href="#3-1-添加依赖" class="headerlink" title="3.1 添加依赖"></a>3.1 添加依赖</h5><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+
+<h5 id="3-2-application-properties"><a href="#3-2-application-properties" class="headerlink" title="3.2 application.properties"></a>3.2 application.properties</h5><pre><code class="hljs properties"><span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span></code></pre>
+
+<h5 id="3-3-服务注册和发现"><a href="#3-3-服务注册和发现" class="headerlink" title="3.3 服务注册和发现"></a>3.3 服务注册和发现</h5><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-meta">@EnableDiscoveryClient</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProviderApplication</span> </span>&#123;
+
+ 	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+ 		SpringApplication.run(Application<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">args</span>)</span>;
+ 	&#125;
+
+ 	<span class="hljs-meta">@RestController</span>
+ 	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EchoController</span> </span>&#123;
+ 		<span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/echo/&#123;string&#125;"</span>, method = RequestMethod.GET)
+ 		<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echo</span><span class="hljs-params">(@PathVariable String string)</span> </span>&#123;
+ 				<span class="hljs-keyword">return</span> string;
+ 		&#125;
+ 	&#125;
+ &#125;</code></pre>
+
+
+
+<h5 id="3-4-启动Nacos服务端"><a href="#3-4-启动Nacos服务端" class="headerlink" title="3.4 启动Nacos服务端"></a>3.4 启动Nacos服务端</h5><blockquote>
+<ol>
+<li>通过从源代码下载或构建来安装Nacos Server。<strong>推荐的最新版本Nacos Server</strong><ol>
+<li>下载Nacos Server <a href="https://github.com/alibaba/nacos/releases" target="_blank" rel="noopener">下载页面</a></li>
+<li>从源代码构建：通过git clone <a href="mailto:git@github.com">git@github.com</a>获取源代码：来自Github Nacos的alibaba / Nacos.git并构建您的代码。有关详细信息，请参阅<a href="https://nacos.io/en-us/docs/quick-start.html" target="_blank" rel="noopener">构建</a></li>
+</ol>
+</li>
+<li>运行<ol>
+<li>Linux / Unix / Mac，执行 <code>sh startup.sh -m standalone</code></li>
+<li>Windows，执行 <code>cmd startup.cmd</code></li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<h5 id="3-5-启动客户端"><a href="#3-5-启动客户端" class="headerlink" title="3.5 启动客户端"></a>3.5 启动客户端</h5><blockquote>
+<p>1.添加application.properties配置</p>
+<pre><code class="hljs properties"><span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-provider</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">18082</span></code></pre>
+</blockquote>
+<h5 id="3-6-查询服务"><a href="#3-6-查询服务" class="headerlink" title="3.6 查询服务"></a>3.6 查询服务</h5><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8848</span><span class="hljs-regexp">/nacos/</span>v1<span class="hljs-regexp">/ns/i</span>nstances?serviceName=service-provider</code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/20190603122655648.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDgyNjM0OQ==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+<h5 id="3-7-服务发现"><a href="#3-7-服务发现" class="headerlink" title="3.7 服务发现"></a>3.7 服务发现</h5><p>Nacos Discovery Starter默认集成了Ribbon，因此对于使用Ribbon进行负载平衡的组件，您可以直接使用Nacos服务发现。</p>
+<p>NacosServerList实现com.netflix.loadbalancer.ServerList接口并在@ConditionOnMissingBean下自动注入它。</p>
+<blockquote>
+<h4 id="使用RestTemplate和FeignClient"><a href="#使用RestTemplate和FeignClient" class="headerlink" title="使用RestTemplate和FeignClient"></a>使用RestTemplate和FeignClient</h4><ol>
+<li><p>添加@LoadBlanced注释以使Ribbon可以访问RestTemplate</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Bean</span>
+<span class="hljs-meta">@LoadBalanced</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();
+&#125;</code></pre>
+</li>
+<li><p>FeignClient默认集成了功能区，显示了如何配置FeignClient。</p>
+<pre><code class="hljs java"><span class="hljs-meta">@FeignClient</span>(name = <span class="hljs-string">"service-provider"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">EchoService</span> </span>&#123;
+    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/echo/&#123;str&#125;"</span>, method = RequestMethod.GET)
+    <span class="hljs-function">String <span class="hljs-title">echo</span><span class="hljs-params">(@PathVariable(<span class="hljs-string">"str"</span>)</span> String str)</span>;
+&#125;</code></pre>
+
+<p>使用@FeignClient批注将<code>EchoService</code>接口包装为FeignClient，其属性名称对应于服务名称<code>service-provider</code>。</p>
+<p>方法的<code>@RequestMapping</code>注释<code>echo</code>将echo方法与URL对应<code>/echo/{str}</code>，<code>@PathVariable</code>注释映射<code>{str}</code>到<code>str</code>echo方法的参数的URL路径中。</p>
+</li>
+<li><p>完成上述配置后，将它们注入TestController。</p>
+<pre><code class="hljs java"><span class="hljs-meta">@RestController</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestController</span> </span>&#123;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> RestTemplate restTemplate;
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> EchoService echoService;
+   
+    <span class="hljs-comment">//RestTemplate</span>
+    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/echo-rest/&#123;str&#125;"</span>, method = RequestMethod.GET)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">rest</span><span class="hljs-params">(@PathVariable String str)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> restTemplate.getForObject(<span class="hljs-string">"http://service-provider/echo/"</span> + str, String<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    &#125;
+    <span class="hljs-comment">//FeignClient</span>
+    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/echo-feign/&#123;str&#125;"</span>, method = RequestMethod.GET)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">feign</span><span class="hljs-params">(@PathVariable String str)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> echoService.echo(str);
+    &#125;
+&#125;</code></pre>
+</li>
+<li><p>添加application.properties配置</p>
+<pre><code class="hljs properties"><span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-consumer</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">18083</span></code></pre>
+</li>
+<li><p>运行</p>
+</li>
+</ol>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><ol>
+<li><code>http://127.0.0.1:18083/echo-rest/1234</code>在浏览器地址栏中输入并单击转到，我们可以看到浏览器显示nacos-discovery-provider-example返回的消息“hello Nacos Discovery 1234”，以证明服务发现有效。</li>
+</ol>
+<p><a href="https://camo.githubusercontent.com/0806773157ca6926e08a5e664ee493fc016ba003/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363330323132342d65653237363730642d626463632d343231302d396635642d3837356163656336643365612e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/0806773157ca6926e08a5e664ee493fc016ba003/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363330323132342d65653237363730642d626463632d343231302d396635642d3837356163656336643365612e706e67" srcset="/img/loading.gif" alt="休息"></a></p>
+<ol>
+<li><code>http://127.0.0.1:18083/echo-feign/12345</code>在浏览器地址栏中输入并单击转到，我们可以看到浏览器显示nacos-discovery-provider-example返回的消息“hello Nacos Discovery 12345”，以证明服务发现有效。</li>
+</ol>
+<p><a href="https://camo.githubusercontent.com/652b6b245a939372c1950a655a07acb994c55f26/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363331313638352d36643063316639622d613435332d346563332d383861622d6637393232643231306636352e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/652b6b245a939372c1950a655a07acb994c55f26/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363331313638352d36643063316639622d613435332d346563332d383861622d6637393232643231306636352e706e67" srcset="/img/loading.gif" alt="假装"></a></p>
+</blockquote>
+<h5 id="3-8-原理"><a href="#3-8-原理" class="headerlink" title="3.8 原理"></a>3.8 原理</h5><blockquote>
+<h3 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h3><p>在Spring云应用程序的启动阶段，将监视WebServerInitializedEvent事件。在初始化Web容器后收到WebServerInitializedEvent事件时，将触发注册操作，并调用ServiceRegistry注册方法以将服务注册到Nacos Server。</p>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p>NacosServerList实现com.netflix.loadbalancer.ServerList接口并在@ConditionOnMissingBean下自动注入它。功能区默认为集成。</p>
+<h2 id="端点"><a href="#端点" class="headerlink" title="端点"></a>端点</h2><p>Nacos Discovery Starter还支持Spring Boot执行器端点的实现。</p>
+<p><strong>先决条件：</strong></p>
+<p>将依赖spring-boot-starter-actuator添加到pom.xml文件中，并配置端点安全策略。</p>
+<p>Spring Boot 1.x：添加配置management.security.enabled = false</p>
+<p> Spring Boot 2.x：添加配置management.endpoints.web.exposure.include = *</p>
+<p>要查看端点信息，请访问以下URL：</p>
+<p>Spring Boot1.x：Nacos Discovery端点URL是<a href="http://127.0.0.1:18083/nacos_discovery" target="_blank" rel="noopener">http://127.0.0.1:18083/nacos_discovery</a>。</p>
+<p>Spring Boot2.x：Nacos Discovery端点URL是<a href="http://127.0.0.1:18083/actuator/nacos-discovery" target="_blank" rel="noopener">http://127.0.0.1:18083/actuator/nacos-discovery</a>。</p>
+<p><a href="https://camo.githubusercontent.com/9d820d357cbc8e17c1b680b2a107f981870ffd2d/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363331393238352d64353432646335662d356466662d343632612d396635322d3732353437373662636439392e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/9d820d357cbc8e17c1b680b2a107f981870ffd2d/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f6c61726b2f302f323031382f706e672f35343331392f313533363938363331393238352d64353432646335662d356466662d343632612d396635322d3732353437373662636439392e706e67" srcset="/img/loading.gif" alt="执行器"></a></p>
+</blockquote>
+<h5 id="3-9-更多"><a href="#3-9-更多" class="headerlink" title="3.9 更多"></a>3.9 更多</h5><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置项</td>
+<td>键</td>
+<td>默认值</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>服务器地址</td>
+<td>spring.cloud.nacos.discovery.server-addr</td>
+<td></td>
+<td>nacos注册中心地址</td>
+</tr>
+<tr>
+<td>服务名</td>
+<td>spring.cloud.nacos.discovery.service</td>
+<td>spring.application.name</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td>权重</td>
+<td>spring.cloud.nacos.discovery.weight</td>
+<td>1</td>
+<td>值从1到100，值越大，重量越大</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>spring.cloud.nacos.discovery.ip</td>
+<td></td>
+<td>ip address to registry，最高优先级</td>
+</tr>
+<tr>
+<td>网络接口</td>
+<td>spring.cloud.nacos.discovery.network-interface</td>
+<td></td>
+<td>未配置IP时，注册的IP地址为网络接口对应的IP地址。如果未配置此项，则默认采用第一个网络接口的地址。</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>spring.cloud.nacos.discovery.port</td>
+<td>-1</td>
+<td>注册端口，无需配置即可自动检测</td>
+</tr>
+<tr>
+<td>namesapce</td>
+<td>spring.cloud.nacos.discovery.namespace</td>
+<td></td>
+<td>开发环境（dev、pro等）</td>
+</tr>
+<tr>
+<td>accesskey</td>
+<td>spring.cloud.nacos.discovery.access-key</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>secretkey</td>
+<td>spring.cloud.nacos.discovery.secret-key</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>元数据</td>
+<td>spring.cloud.nacos.discovery.metadata</td>
+<td></td>
+<td>扩展数据，使用Map格式配置</td>
+</tr>
+<tr>
+<td>日志名称</td>
+<td>spring.cloud.nacos.discovery.log-name</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>端点</td>
+<td>spring.cloud.nacos.discovery.endpoint</td>
+<td></td>
+<td>服务的域名，通过该域名可以动态获取服务器地址。</td>
+</tr>
+<tr>
+<td>集成功能区</td>
+<td>ribbon.nacos.enabled</td>
+<td>true</td>
+<td></td>
+</tr>
+</tbody></table>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/2020-05/">2020-05</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SpringCloud/">SpringCloud</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/31/03%20SpringCloud%20Gateway/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SpringCloud Gateway</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/31/01%20Sentinel%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4/">
+                        <span class="hidden-mobile">Sentinel服务保护</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js" ></script>
+
+  <script type="text/javascript">
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+
+      new Valine({
+        el: "#vcomments",
+        app_id: "5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz",
+        app_key: "34jqtpneAbJft4I56LcsIwlQ",
+        placeholder: "",
+        path: window.location.pathname,
+        avatar: "retro",
+        meta: ["nick","mail","link"],
+        pageSize: "10",
+        lang: "zh-CN",
+        highlight: true,
+        recordIP: true,
+        serverURLs: "https://5o5kl2lb.lc-cn-n1-shared.com",
+      });
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'true' === 'true',
+      loop: 'all',
+      order: 'list',
+      theme: '#FF3366',
+      preload: 'none',
+      audio: [{"name":"错季","artist":"秋原依","url":"/songs/秋原依 - 错季.flac","cover":"/songs/img/秋原依 - 错季.jpg"},{"name":"飞鸟和蝉","artist":"任然","url":"/songs/任然-飞鸟和蝉.flac","cover":"/songs/img/任然-飞鸟和蝉.jpg"},{"name":"刚刚好","artist":"邓园长","url":"/songs/刚刚好.mp3","cover":"/songs/img/刚刚好.jpg"},{"name":"迷失幻境","artist":"IN-K 王忻辰","url":"/songs/IN-K 王忻辰 - 迷失幻境.mp3","cover":"/songs/img/IN-K 王忻辰 - 迷失幻境.jpg"},{"name":"用力活着","artist":"张茜","url":"/songs/张茜 - 用力活着.flac","cover":"/songs/img/张茜 - 用力活着.jpg"},{"name":"善变","artist":"王靖雯不胖","url":"/songs/王靖雯不胖 - 善变.flac","cover":"/songs/img/王靖雯不胖 - 善变.jpg"},{"name":"AEBD","artist":"亦柯","url":"/songs/亦柯 - AEBD.mp3","cover":"/songs/img/AEBD.jpg"},{"name":"不知所措","artist":"王靖雯不胖","url":"/songs/王靖雯不胖-不知所措.flac","cover":"/songs/img/王靖雯不胖-不知所措.jpg"},{"name":"挥霍","artist":"高鱼","url":"/songs/高鱼-挥霍.flac","cover":"/songs/img/高鱼-挥霍.jpg"},{"name":"隔岸观火","artist":"高源","url":"/songs/高源-隔岸观火.flac","cover":"/songs/img/高源-隔岸观火.jpg"},{"name":"If（翻自 丁可）","artist":"七元","url":"/songs/七元 - If（翻自 丁可）.flac","cover":"/songs/img/七元 - If（翻自 丁可）.jpg"},{"name":"回到夏天","artist":"做七爷/爱写歌的小田","url":"/songs/回到夏天.mp3","cover":"/songs/img/回到夏天.png"},{"name":"MOM","artist":"你的二智bb","url":"/songs/MOM.mp3","cover":"/songs/img/MOM.jpg"},{"name":"写给黄淮","artist":"解忧邵帅","url":"/songs/写给黄淮.mp3","cover":"/songs/img/写给黄淮.jpg"},{"name":"Read All About It","artist":"THEO","url":"/songs/Read All About It.mp3","cover":"/songs/img/Read All About It.jpg"},{"name":"Can We Kiss Forever.mp3","artist":"Kina,Adriana Proenza","url":"/songs/Kina,Adriana Proenza - Can We Kiss Forever.mp3","cover":"/songs/img/Can We Kiss Forever.jpg"},{"name":"MELANCHOLY","artist":"White Cherry","url":"/songs/White Cherry - MELANCHOLY.mp3","cover":"/songs/img/MELANCHOLY.jpg"},{"name":"round and round","artist":"晴桑呀","url":"/songs/晴桑呀 - round and round(原版音乐).mp3","cover":"/songs/img/Round and round.jpg"},{"name":"Girls Like You（toby randall）（翻自 J.Fla）","artist":"AGAM","url":"/songs/AGAM - Girls Like You（toby randall）（翻自 J.Fla）.flac","cover":"/songs/img/AGAM - Girls Like You（toby randall）.jpg"},{"name":"过活","artist":"高鱼","url":"/songs/高鱼 - 过活.mp3","cover":"/songs/img/高鱼-过活.jfif"},{"name":"晚婚","artist":"隔壁老樊","url":"/songs/晚婚 - 隔壁老樊.m4a","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"理想三旬","artist":"陈鸿宇","url":"/songs/理想三旬.mp3","cover":"/songs/img/理想三旬.jpg"},{"name":"多想在平庸的生活拥抱你","artist":"隔壁老樊","url":"/songs/多想在平庸的生活拥抱你.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"我曾","artist":"隔壁老樊","url":"/songs/我曾.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"得不到你","artist":"隔壁老樊","url":"/songs/得不到你.mp3","cover":"/songs/img/得不到你.jpg"},{"name":"这一生关于你的风景","artist":"隔壁老樊","url":"/songs/这一生关于你的风景.mp3","cover":"/songs/img/这一生关于你的风景.jfif"},{"name":"那个女孩对我说","artist":"戴羽彤","url":"/songs/那个女孩对我说.mp3","cover":"/songs/img/那个女孩对我说.png"}]
+    });
+  }
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+    <div class="text-center py-3">
+        <div>
+            <i class="iconfont icon-love"></i>
+            <span>将喜欢的一切留在身边 这便是努力的意义</span></a>
+            <i class="iconfont icon-love"></i>
+        </div>
+        
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+        
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">陕ICP备20008687号-1</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61011302000993"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>陕公网安备 61011302000993号</span>
+      </a>
+     
+  </div>
+
+
+        
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer>
+  (function () {
+    // 查询存储的记录
+    function getRecord(Counter, target) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {target, time: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    }
+
+    // 发起自增请求
+    function increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    }
+
+    // 构建自增请求体
+    function buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "time": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    }
+
+    // 校验是否为有效的 UV
+    function validUV() {
+      var key = 'LeanCloud_UV_Flag';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    }
+
+    function addCount(Counter) {
+      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
+      var getterArr = [];
+      var incrArr = [];
+
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#leancloud-site-pv-container');
+      if (pvCtn || enableIncr) {
+        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
+          incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-pv');
+          if (ele) {
+            ele.innerText = record.time + 1;
+            if (pvCtn) {
+              pvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#leancloud-site-uv-container');
+      if (uvCtn || enableIncr) {
+        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
+          var vuv = validUV();
+          vuv && incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-uv');
+          if (ele) {
+            ele.innerText = record.time + (vuv ? 1 : 0);
+            if (uvCtn) {
+              uvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 如果是文章，请求文章的浏览数，并自增
+      if ('true' === 'true') {
+        var viewCtn = document.querySelector('#leancloud-post-views-container');
+        if (viewCtn || enableIncr) {
+          var target = decodeURI('/2020/05/31/02%20Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%8F%8A%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/');
+          var viewGetter = getRecord(Counter, target).then((record) => {
+            incrArr.push(buildIncrement(record.objectId))
+            if (viewCtn) {
+              var ele = document.querySelector('#leancloud-post-views');
+              if (ele) {
+                ele.innerText = (record.time || 0) + 1;
+                viewCtn.style.display = 'inline';
+              }
+            }
+          });
+          getterArr.push(viewGetter);
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && increment(Counter, incrArr);
+        })
+      }
+    }
+
+    var app_id = '5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz'
+    var app_key = '34jqtpneAbJft4I56LcsIwlQ'
+    var server_url = 'https://5o5kl2lb.lc-cn-n1-shared.com'
+
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': app_id,
+            'X-LC-Key': app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+
+      addCount(Counter);
+    }
+
+    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(resp => resp.json())
+        .then(({api_server}) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Nacos配置中心及注册中心&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

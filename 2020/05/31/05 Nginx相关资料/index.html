@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#000">
+  <meta name="description" content="清醒 识趣 努力 优秀 不负余生🍃">
+  <meta name="author" content="karma">
+  <meta name="keywords" content="">
+  <title>Nginx相关资料 - Karma の 小屋</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karma の Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-05-31 10:04">
+      2020年5月31日 上午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      63
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-post-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h4 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h4><p>1.安装编译工具及库文件</p>
+<pre><code class="hljs shell">yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel</code></pre>
+
+<p>2.解压</p>
+<pre><code class="hljs shell">tar -zxvf nginx.nginx-1.16.1.tar.gz</code></pre>
+
+<p>3.编译，并指定目录</p>
+<pre><code class="hljs shell">./configure --prefix=/usr/local/nginx
+make &amp;&amp; make install</code></pre>
+
+<p>4.启动</p>
+<pre><code class="hljs shell">cd /usr/local/nginx/sbin
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 启动</span></span>
+./nginx
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 停止</span></span>
+./nginx -s stop</code></pre>
+
+<h4 id="二、反向代理"><a href="#二、反向代理" class="headerlink" title="二、反向代理"></a>二、反向代理</h4><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 修改配置文件nginx.conf</span></span>
+server &#123;
+        listen       80;
+        server_name  localhost;
+<span class="hljs-meta">		#</span><span class="bash"> </span>
+        location / &#123;
+            proxy_pass   http://127.0.0.1:8080;
+            index  index.html index.htm;
+        &#125;
+    &#125;</code></pre>
+
+<h4 id="三、负载均衡"><a href="#三、负载均衡" class="headerlink" title="三、负载均衡"></a>三、负载均衡</h4><blockquote>
+<p>五种负载均衡策略</p>
+<p>1.轮训（default）：根据时间顺序分配不同服务器</p>
+<p>2.权重：指定轮训机率，weight和访问比率成正比  </p>
+<p>3.Ip绑定：固定ip访问</p>
+<p>4.fair：第三方，根据服务响应时间分配</p>
+<p>5.url_hash：第三方，按访问url的hash结果来分配请求 ，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效  </p>
+<p>Nginx负载均衡提供上游服务器(真实业务逻辑访问的服务器),负载均衡、故障转移、失败重试、容错、健康检查等。</p>
+<p>当上游服务器(真实业务逻辑访问的服务器)发生故障时，可以转移到其他上游服务器(真实业务逻辑访问的服务器)。</p>
+</blockquote>
+<p>1.upstream server配置</p>
+<p>1.1 轮训</p>
+<pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">##定义上游服务器(需要被nginx真实代理访问的服务器) 默认是轮训机制</span></span>
+upstream  backServer&#123;
+	server 127.0.0.1:8080;
+	server 127.0.0.1:8081;
+&#125;
+
+server &#123;
+	listen       80;
+	server_name  localhost;
+	location / &#123;
+<span class="hljs-meta">		#</span><span class="bash"><span class="hljs-comment">## 指定上游服务器负载均衡服务器</span></span>
+		proxy_pass http://backServer;
+		index  index.html index.htm;
+	&#125;
+&#125;</code></pre>
+
+<p>1.2 权重</p>
+<pre><code class="hljs shell"> upstream  backServer&#123;
+    server 127.0.0.1:8080 weight=1;
+    server 127.0.0.1:8081 weight=2;
+&#125;
+	
+server &#123;
+       listen       80;
+       server_name  localhost;
+       location / &#123;
+	    ### 指定上游服务器负载均衡服务器
+	    proxy_pass http://backServer;
+           index  index.html index.htm;
+       &#125;
+   &#125;</code></pre>
+
+
+
+<h4 id="nginx-conf详解"><a href="#nginx-conf详解" class="headerlink" title="nginx.conf详解"></a>nginx.conf详解</h4><pre><code class="hljs clean">##代码块中的events、http、server、location、upstream等都是块配置项##
+##块配置项可以嵌套。内层块直接继承外层快，例如：server块里的任意配置都是基于http块里的已有配置的##
+ 
+##Nginx worker进程运行的用户及用户组 
+#语法：user username[groupname]    默认：user nobody nobody
+#user用于设置master进程启动后，fork出的worker进程运行在那个用户和用户组下。当按照<span class="hljs-string">"user username;"</span>设置时，用户组名与用户名相同。
+#若用户在configure命令执行时，使用了参数--user=usergroup 和 --group=groupname,此时nginx.conf将使用参数中指定的用户和用户组。
+#user  nobody;
+ 
+##Nginx worker进程个数：其数量直接影响性能。
+#每个worker进程都是单线程的进程，他们会调用各个模块以实现多种多样的功能。如果这些模块不会出现阻塞式的调用，那么，有多少CPU内核就应该配置多少个进程，反之，有可能出现阻塞式调用，那么，需要配置稍多一些的worker进程。
+worker_processes  <span class="hljs-number">1</span>;
+
+##绑定Nginx worker进程到指定的CPU内核
+#语法：worker_cpu_affinity cpumask[cpumask...]
+#例如有<span class="hljs-number">4</span>个CPU内核
+#worker_cpu_affinity <span class="hljs-number">1000</span> <span class="hljs-number">0100</span> <span class="hljs-number">0010</span> <span class="hljs-number">0001</span>;
+ 
+##ssl硬件加速。
+#用户可以用OpneSSL提供的命令来查看是否有ssl硬件加速设备：openssl engine -t
+#ssl_engine device;
+
+##系统调用gettimeofday的执行频率
+#语法： timer_resolution t
+
+##Nginx worker进程优先级设置
+#语法： worker_priority nice;
+#默认： worker_priority <span class="hljs-number">0</span>;
+
+##守护进程(daemon)。是脱离终端在后台允许的进程。它脱离终端是为了避免进程执行过程中的信息在任何终端上显示。这样一来，进程也不会被任何终端所产生的信息所打断。##
+##关闭守护进程的模式，之所以提供这种模式，是为了方便跟踪调试nginx，毕竟用gdb调试进程时最繁琐的就是如何继续跟进fork出的子进程了。##
+##如果用off关闭了master_proccess方式，就不会fork出worker子进程来处理请求，而是用master进程自身来处理请求
+#daemon off;   #查看是否以守护进程的方式运行Nginx 默认是on
+#master_process off; #是否以master/worker方式工作 默认是on
+ 
+##error日志的设置#
+#语法： error_log /path/file level;
+#默认： error_log / log/error.log error;
+#当path/file 的值为 /dev/null时，这样就不会输出任何日志了，这也是关闭error日志的唯一手段；
+#leve的取值范围是debug、info、notice、warn、error、crit、alert、emerg从左至右级别依次增大。
+#当level的级别为error时，error、crit、alert、emerg级别的日志就都会输出。大于等于该级别会输出，小于该级别的不会输出。
+#如果设定的日志级别是debug，则会输出所有的日志，这一数据量会很大，需要预先确保/path/file所在的磁盘有足够的磁盘空间。级别设定到debug，必须在configure时加入 --<span class="hljs-keyword">with</span>-debug配置项。
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+##用来帮助用户跟踪调试Nginx 接收两个参数stop和abort 通常不会使用
+#stop Nginx的代码执行到这些调试点就会发出SIGSTOP信号以用于调试
+#abort 会产生一个coredump文件，可以使用gdb来查看Nginx当时的各种信息
+#debug_points point[stop|abort]
+
+##限制coredump核心转储文件的大小
+#Nginx强制停止，将信息存储在core文件中，以做调试使用。一个core文件可能达到几GB，所以需要加以限制
+#语法：worker_rlimit_core size
+#worker_rlimit_core <span class="hljs-number">1</span>g;
+
+##指定coredump文件生成目录
+#语法：working_directory path;
+#working_directory ./core;
+
+##指定Nginx worker进程可以打开的最大句柄描述符个数
+#语法：worker_rlimit_nofile limit
+
+##设置每个用户发往Nginx的信号队列的大小。
+#也就是说用户的信号队列满了，再发送就会被丢失
+#语法：worker_rlimit_sigpending limit;
+
+##pid文件（master进程ID的pid文件存放路径）的路径
+#pid        logs/nginx.pid;
+
+##定义环境变量
+#语法：env VAR|VAR=VALUE
+#env TESTPATH=/tmp/;
+
+##是否打开accept锁 accept_mutex是Nginx的负载均衡锁
+#语法： accept_mutex[on|off]
+#默认： accept_mutext on;
+
+##lock文件的路径
+#语法： lock_file path/file;
+#默认： lock_file logs/nginx.lock;
+
+##使用accept锁后到真正建立连接之间的延迟时间
+#语法： accept_mutex_delay Nms;
+#默认： accept_mutex_delay <span class="hljs-number">500</span>ms;
+
+##批量建立新连接
+#语法： multi_accept[on|off];
+#默认： multi_accept off;
+
+##选择事件模型 
+#语法： use[kqueue|rtsig|epoll|/dev/poll|select|poll|eventport];
+#默认： Nginx会自动使用最适合的事件模型。
+#对于Linux操作系统来说， 可供选择的事件驱动模型有poll、 select、 epoll三种。 epoll当
+然是性能最高的一种，
+
+events &#123;
+ 	#仅对指定的客户端输出debug级别的日志： 语法：debug_connection[IP|CIDR]
+ 	#这个设置项实际上属于事件类配置，因此必须放在events&#123;……&#125;中才会生效。它的值可以是IP地址或者是CIRD地址。
+ 	#debug_connection <span class="hljs-number">10.224</span><span class="hljs-number">.66</span><span class="hljs-number">.14</span>;  #或是debug_connection <span class="hljs-number">10.224</span><span class="hljs-number">.57</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>
+ 	#这样，仅仅以上IP地址的请求才会输出debug级别的日志，其他请求仍然沿用error_log中配置的日志级别。
+ 	#注意：在使用debug_connection前，需确保在执行configure时已经加入了--<span class="hljs-keyword">with</span>-debug参数，否则不会生效。
+ 	##每个worker的最大连接数
+	worker_connections  <span class="hljs-number">1024</span>;
+&#125;
+ 
+##核心转储(coredump):在Linux系统中，当进程发生错误或收到信号而终止时，系统会将进程执行时的内存内容(核心映像)写入一个文件(core文件)，以作为调试只用，这就是所谓的核心转储(coredump).
+ 
+http &#123;
+	##嵌入其他配置文件 语法：include /path/file
+	#参数既可以是绝对路径也可以是相对路径（相对于Nginx的配置目录，即nginx.conf所在的目录）
+    include       mime.types;
+    default_type  application/octet-stream;
+ 
+    #log_format  main  <span class="hljs-string">'$remote_addr - $remote_user [$time_local] "$request" '</span>
+    #                  <span class="hljs-string">'$status $body_bytes_sent "$http_referer" '</span>
+    #                  <span class="hljs-string">'"$http_user_agent" "$http_x_forwarded_for"'</span>;
+ 
+    #access_log  logs/access.log  main;
+ 
+    sendfile        on;
+    #tcp_nopush     on;
+ 
+    #keepalive_timeout  <span class="hljs-number">0</span>;
+    keepalive_timeout  <span class="hljs-number">65</span>;
+ 
+    #gzip  on;
+ 
+    server &#123;
+		##listen监听的端口
+		#语法：listen address:port [ default(deprecated <span class="hljs-keyword">in</span> <span class="hljs-number">0.8</span><span class="hljs-number">.21</span>) | default_server | [ backlog=num | rcvbuf=size | sndbuf=size | accept_filter=filter | deferred | bind | ssl ] ]
+		#default_server: 如果没有设置这个参数，那么将会以在nginx.conf中找到的第一个server块作为默认server块
+		#backlog=num：表示TCP中backlog队列的大小，默认<span class="hljs-number">-1</span>，表示不予设置
+		#rcvbuf=size： 设置监听句柄的SO_RCVBUF参数。
+		#sndbuf=size： 设置监听句柄的SO_SNDBUF参数。
+		#accept_filter： 设置accept过滤器， 只对FreeBSD操作系统有用
+		#bind：绑定当前端口/地址，只有同时对一个端口监听多个地址时
+才会生效。
+		#ssl： 在当前监听的端口上建立的连接必须基于SSL协议。
+		listen       <span class="hljs-number">8080</span>;
+ 
+		#主机名称：其后可以跟多个主机名称，开始处理一个HTTP请求时，nginx会取出header头中的Host，与每个server中的server_name进行匹配，以此决定到底由那一个server来处理这个请求。有可能一个Host与多个server块中的server_name都匹配，这时会根据匹配优先级来选择实际处理的server块。
+	 	server_name  localhost;
+ 
+        #charset koi8-r;
+ 
+        #access_log  logs/host.access.log  main;
+ 
+        #location / &#123;
+        #    root   html;
+        
+        	##用来设置文件资源路径的
+			#语法： alias path;
+			#配置块： location
+		#	alias usr/local/nginx/conf/;
+        #    index  index.html index.htm;
+        #&#125;
+        
+        ##若请求的URI是/download/index/test.html， 那服务器就会返回服务器上optwebhtml、download/index/test.html文件的内容。
+        #location /download/ &#123;
+		#	root optwebhtml;
+		#&#125;
+		
+
+ 
+		##location 语法： location [=|~|~*|^~|@]/uri/ &#123; ... &#125;
+		#注意：location时有顺序的，当一个请求有可能匹配多个location时，实际上这个请求会被第一个location处理。
+		location / &#123;
+			proxy_pass http:<span class="hljs-comment">//192.168.1.60;</span>
+   	 	&#125;
+   	 	
+   	 	##按HTTP方法名限制用户请求
+		#语法： limit_except method...&#123;...&#125;
+		#配置块： location
+		#方法名可取值包括： GET、HEAD、 POST、 PUT、 DELETE、 MKCOL、 COPY、 MOVE、 OPTIONS、 PROPFIND、PROPPATCH、 LOCK、 UNLOCK或者PATCH。 
+		#limit_except GET &#123;
+		#	allow <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">32</span>;
+		#	deny all;
+		#&#125;
+		#注意， 允许GET方法就意味着也允许HEAD方法。 因此， 上面这段代码表示的是禁止
+GET方法和HEAD方法， 但其他HTTP方法是允许的。
+		
+		
+		
+ 
+		##根据HTTP返回码重定向页面
+		#语法：error_page <span class="hljs-keyword">code</span>[<span class="hljs-keyword">code</span>...][=|=answer-<span class="hljs-keyword">code</span>]uri|@named_location
+		#配置块： http、 server、 location、 <span class="hljs-keyword">if</span>
+        #error_page  <span class="hljs-number">404</span>              /<span class="hljs-number">404.</span>html;
+        error_page   <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span>  /<span class="hljs-number">50</span>x.html;
+        
+        ##是否允许递归使用error_page
+		#语法： recursive_error_pages[on|off];
+		#默认： recursive_error_pages off;
+		#配置块： http、 server、 location
+		
+		##尝试按照顺序访问每一个path， 如果可以有效地读取， 就直接向用户返回这个path对应的文件结束请求， 否则继续向下访问。 如果所有的path都找不到有效的文件， 就重定向到最后的参数
+uri上。 
+		#因此最后一个path必须有url参数
+		#语法： try_files path1[path2]uri;
+		#配置块： server、 location
+        
+        location = /<span class="hljs-number">50</span>x.html &#123;
+            root   html;
+        &#125;
+        
+        ##为了提高快速寻找到相应server name的能力， Nginx使用散列表来存储server name。
+		#server_names_hash_bucket_size设置了每个散列桶占用的内存大小。
+    	#语法： server_names_hash_bucket_size size;
+		#默认： server_names_hash_bucket_size <span class="hljs-number">32</span>|<span class="hljs-number">64</span>|<span class="hljs-number">128</span>;
+		#配置块： http、 server、 location
+	
+		##server_names_hash_max_size会影响散列表的冲突率。 server_names_hash_max_size越大，
+消耗的内存就越多， 但散列key的冲突率则会降低， 检索速度也更快。
+		#语法： server_names_hash_max_size size;
+		#默认： server_names_hash_max_size <span class="hljs-number">512</span>;
+		#配置块： http、 server、 location
+	
+		##重定向主机名称的处理
+		#该配置需要配合server_name使用。 在使用on打开时， 表示在重定向请求时会使用
+server_name里配置的第一个主机名代替原先请求中的Host头部， 而使用off关闭时， 表示在重
+定向请求时使用请求本身的Host头部。
+		#语法： server_name_in_redirect on|off;
+		#默认： server_name_in_redirect on;
+		#配置块： http、 server或者location
+		
+		##HTTP包体只存储到磁盘文件中
+		#当值为非off时， 用户请求中的HTTP包体一律存储到磁盘文件中， 即使只有<span class="hljs-number">0</span>字节也会存
+储为文件。 当请求结束时， 如果配置为on， 则这个文件不会被删除（该配置一般用于调试、
+定位问题） ， 但如果配置为clean， 则会删除该文件。
+		#语法： client_body_in_file_only on|clean|off;
+		#默认： client_body_in_file_only off;
+		#配置块： http、 server、 location
+		
+		##HTTP包体尽量写入到一个内存buffer中
+		#用户请求中的HTTP包体一律存储到内存buffer中。 当然， 如果HTTP包体的大小超过了
+下面client_body_buffer_size设置的值， 包体还是会写入到磁盘文件中。
+		#语法： client_body_in_single_buffer on|off;
+		#默认： client_body_in_single_buffer off;
+		#配置块： http、 server、 location
+		
+		##存储HTTP头部的内存buffer大小
+		#语法： client_header_buffer_size size;
+		#默认： client_header_buffer_size <span class="hljs-number">1</span>k;
+		#配置块： http、 server
+		
+		##存储超大HTTP头部的内存buffer大小
+		#语法： large_client_header_buffers number size;
+		#默认： large_client_header_buffers <span class="hljs-number">48</span>k;
+		#配置块： http、 server
+		
+		##存储HTTP包体的内存大小
+		#语法： client_body_buffer_siz size
+		#默认： client_body_buffer_siz <span class="hljs-number">8</span>k/<span class="hljs-number">16</span>k;
+		#配置块：http、 server、 location
+		
+		##HTTP包体的临时存放目录
+		#语法： client_body_temp_path dir-path[level1[level2[level3]]]
+		#默认： client_body_temp_path client_body_temp;
+		#配置块： http、 server、 location
+		
+		##指定内存池的初始大小
+		#语法： connection_pool_size size;
+		#默认： connection_pool_size <span class="hljs-number">256</span>;
+		#配置块： http、 server
+		
+		##指定每个请求的内存池大小
+		#语法： request_pool_size size;
+		#默认： request_pool_size <span class="hljs-number">4</span>k;
+		#配置块： http、 server
+		
+		##读取HTTP头部的超时时间
+		#语法： client_header_timeout time（默认单位： 秒） ;
+		#默认： client_header_timeout <span class="hljs-number">60</span>;
+		#配置块： http、 server、 location
+		
+		##读取HTTP包体的超时时间
+		#语法： client_body_timeout time（默认单位： 秒） ；
+		#默认： client_body_timeout <span class="hljs-number">60</span>;
+		#配置块： http、 server、 location
+		
+		##发送响应的超时时间
+		#语法： send_timeout time;
+		#默认： send_timeout <span class="hljs-number">60</span>;
+		#配置块： http、 server、 location
+		
+		##连接超时后将通过向客户端发送RST包来直接重置连接
+		#语法： reset_timeout_connection on|off;
+		#默认： reset_timeout_connection off;
+		#配置块： http、 server、 location
+		
+		##该配置控制Nginx关闭用户连接的方式。
+		#语法： lingering_close off|on|always;
+		#默认： lingering_close on;
+		#配置块： http、 server、 location
+		
+		##lingering_close启用后， 这个配置项对于上传大文件很有用
+		#语法： lingering_time time;
+		#默认： lingering_time <span class="hljs-number">30</span>s;配置块： http、 server、 location
+		
+		##lingering_close生效后， 在关闭连接前， 会检测是否有用户发送的数据到达服务器， 如果
+超过lingering_timeout时间后还没有数据可读， 就直接关闭连接； 否则， 必须在读取完连接缓
+冲区上的数据并丢弃掉后才会关闭连接。
+		#语法： lingering_timeout time;
+		#默认： lingering_timeout <span class="hljs-number">5</span>s;
+		#配置块： http、 server、 location
+		
+		##对某些浏览器禁用keepalive功能
+		#语法： keepalive_disable[msie6|safari|none]...
+		#默认： keepalive_disablemsie6 safari
+		#配置块： http、 server、 location
+		
+		##keepalive超时时间
+		#语法： keepalive_timeout time（默认单位： 秒） ;
+		#默认： keepalive_timeout <span class="hljs-number">75</span>;
+		#配置块： http、 server、 location
+		
+		##一个keepalive长连接上允许承载的请求最大数
+		#语法： keepalive_requests n;
+		#默认： keepalive_requests <span class="hljs-number">100</span>;
+		#配置块： http、 server、 location
+		
+		##确定对keepalive连接是否使用TCP_NODELAY选项
+		#语法： tcp_nodelay on|off;
+		#默认： tcp_nodelay on;
+		#配置块： http、 server、 location
+		
+		##在打开sendfile选项时， 确定是否开启FreeBSD系统上的TCP_NOPUSH或Linux系统上的
+TCP_CORK功能。 打开tcp_nopush后， 将会在发送响应时把整个响应包头放到一个TCP包中
+发送。
+		#语法： tcp_nopush on|off;
+		#默认： tcp_nopush off;
+		#配置块： http、 server、 location
+		
+		##HTTP请求包体的最大值
+		#语法： client_max_body_size size;
+		#默认： client_max_body_size <span class="hljs-number">1</span>m;
+		#配置块： http、 server、 location
+		
+		##对请求的限速
+		#此配置是对客户端请求限制每秒传输的字节数。默认参数为<span class="hljs-number">0</span>， 表示不限速。
+		#语法： limit_rate speed;
+		#默认： limit_rate <span class="hljs-number">0</span>;
+		#配置块： http、 server、 location、 <span class="hljs-keyword">if</span>
+		
+		##Nginx向客户端发送的响应长度超过limit_rate_after后才开始限速
+		#语法： limit_rate_after time;
+		#默认： limit_rate_after <span class="hljs-number">1</span>m;
+		#配置块： http、 server、 location、 <span class="hljs-keyword">if</span>
+		
+		##sendfile系统调用
+		#语法： sendfile on|off;
+		#默认： sendfile off;
+		#配置块： http、 server、 location
+		
+		##AIO系统调用
+        #语法： aio on|off;
+        #默认： aio off;
+        #配置块： http、 server、 location
+        
+        ##此配置项在FreeBSD和Linux系统上使用O_DIRECT选项去读取文件， 缓冲区大小为size，
+通常对大文件的读取速度有优化作用。 
+		#注意， 它与sendfile功能是互斥的。
+        #语法： directio size|off;
+        #默认： directio off;
+        #配置块： http、 server、 location
+		
+		##指定以directio方式读取文件时的对齐方式
+		#它与directio配合使用
+        #语法： directio_alignment size;
+        #默认： directio_alignment <span class="hljs-number">512</span>;
+        #配置块： http、 server、 location
+		
+		##打开文件缓存
+        #语法： open_file_cache max=N[inactive=time]|off;
+        #默认： open_file_cache off;
+        #配置块： http、 server、 location
+        
+        ##是否缓存打开文件错误的信息
+		#语法： open_file_cache_errors on|off;
+		#默认： open_file_cache_errors off;
+		#配置块： http、 server、 location
+		
+		##不被淘汰的最小访问次数
+		#它与open_file_cache中的inactive参数配合使用
+		#语法： open_file_cache_min_uses number;
+		#默认： open_file_cache_min_uses <span class="hljs-number">1</span>;
+		#配置块： http、 server、 location
+		
+		##检验缓存中元素有效性的频率
+		#默认为每<span class="hljs-number">60</span>秒检查一次缓存中的元素是否仍有效
+		#语法： open_file_cache_valid time;
+		#默认： open_file_cache_valid <span class="hljs-number">60</span>s;
+		#配置块： http、 server、 location
+		
+		##忽略不合法的HTTP头部
+		#语法： ignore_invalid_headers on|off;
+		#默认： ignore_invalid_headers on;
+		#配置块： http、 server
+		
+		##HTTP头部是否允许下划线
+		#语法： underscores_in_headers on|off;
+		#默认： underscores_in_headers off;
+		#配置块： http、 server
+		
+		##对If-Modified-Since头部的处理策略
+        #语法： if_modified_since[off|exact|before];
+        #默认： if_modified_since exact;
+        #配置块： http、 server、 location
+        
+        ##文件未找到时是否记录到error日志
+        #语法： log_not_found on|off;
+        #默认： log_not_found on;
+        #配置块： http、 server、 location
+        
+        ##是否合并相邻的“”
+        #语法： merge_slashes on|off;
+        #默认： merge_slashes on;
+        #配置块： http、 server、 location
+		
+		##DNS解析地址
+        #语法： resolver address...;
+        #配置块： http、 server、 location
+        
+        ##DNS解析的超时时间
+        #语法： resolver_timeout time;
+        #默认： resolver_timeout <span class="hljs-number">30</span>s;
+        #配置块： http、 server、 location
+        
+        ##返回错误页面时是否在Server中注明Nginx版本
+        #语法： server_tokens on|off;
+        #默认： server_tokens on;
+        #配置块： http、 server、 location
+        
+--------------------负载均衡、反向代理----------------------------        
+        
+        ##upstream块，定义一个上游服务器集群
+		#语法： upstream name&#123;...&#125;
+		#配置块： http
+		upstream backserver&#123;
+			##上游服务名可以为域名、ip端口
+			#参数说明：
+			- weight=<span class="hljs-number">1</span> 权重；
+			- max_fails=<span class="hljs-number">1</span>与fail_time=<span class="hljs-number">10</span>s配合使用，表示在<span class="hljs-number">10</span>s内，上游服务器失败次数超过<span class="hljs-number">1</span>次，则不可用
+			- down：表示所在的上游服务器永久下线，只能使用ip_hash配置项时才能用
+			- backup：在使用ip_hash配置项时它是无效的，指备份服务器，表示所有非备份服务器都失效，才会执行
+			server <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span>:<span class="hljs-number">90</span>;
+			
+			##ip_hash 有效地管理集群中相同的缓存信息
+			#ip_hash与weight配置不可同时使用
+			ip_hash;
+		&#125;
+		
+		##反向代理的基本配置
+		#proxy_pass
+		#语法： proxy_pass URL;
+		#配置块： location、 <span class="hljs-keyword">if</span>
+		location / &#123;
+			proxy_pass http:<span class="hljs-comment">//backserver; #配置负载均衡</span>
+			#proxy_pass http:<span class="hljs-comment">//localhost:8080/test</span>
+			
+			#注：默认情况，反向代理不会转发请求中的Host头部，如需，添加
+			proxy_set_header Host $host;
+			
+			#proxy_method表示转发时的协议方法名。
+            #语法： proxy_method method;
+			#配置块： http、 server、 location
+			proxy_method POST; #发来get请求，也会转化成POST
+			
+			#proxy_hide_header 指定HTTP头部字段哪些可以转发，默认不会转发
+			#语法： proxy_hide_header the_header;
+			#配置块： http、 server、 location
+			proxy_hide_header Cache-Control;
+			proxy_hide_header MicrosoftOfficeWebServer;
+			
+			#proxy_pass_header：将原来禁止转发的header设置为允许
+转发
+			#语法： proxy_pass_header the_header;
+			#配置块： http、 server、 location
+			proxy_pass_header X-Accel-Redirect;
+			
+			#proxy_pass_request_body：确定是否向上游服务器发送HTTP包体部分
+			#语法： proxy_pass_request_body on|off;
+			#默认： proxy_pass_request_body on;
+			#配置块： http、 server、 location
+			proxy_pass_request_body off;
+			
+			#proxy_pass_request_headers:确定是否转发HTTP头部
+			#语法： proxy_pass_request_headers on|off;
+			#默认： proxy_pass_request_headers on;
+			#配置块： http、 server、 location
+			
+			#proxy_redirect:当上游服务器返回的响应是重定向或刷新请求（<span class="hljs-number">301</span>或者<span class="hljs-number">302</span>） 时，proxy_redirect可以重设HTTP头部的location或refresh字段。
+			#语法： proxy_redirect[default|off|redirect replacement];
+			#参数解释：off：使location或者refresh字段维持不变。
+			#默认： proxy_redirect default;
+			#配置块： http、 server、 location
+			proxy_redirect off;
+			
+			#proxy_next_upstream：当一台上游服务转发请求出现错误时，继续换一台上游服务器转发请求
+			#语法：proxy_next_upstream[error|timeout|invalid_header|http_500|http_502|http_503|http_504|http_404|off];
+			#默认： proxy_next_upstream error timeout;
+			#配置块： http、 server、 location
+			proxy_next_upstream timeout;
+		&#125;
+    &#125; 
+&#125;</code></pre>
+
+
+
+<p>server_name与Host的匹配优先级</p>
+<table>
+<thead>
+<tr>
+<th>server_name与Host的匹配优先级</th>
+<th>案例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首先选择所有字符串完全匹配的server_name</td>
+<td>如：<a href="http://www.testwab.com" target="_blank" rel="noopener">www.testwab.com</a></td>
+</tr>
+<tr>
+<td>其次选择通配符在前面的server_name</td>
+<td>如：*.testwab.com</td>
+</tr>
+<tr>
+<td>其次选择通配符在后面的server_name</td>
+<td>如：<a href="http://www.testwab" target="_blank" rel="noopener">www.testwab</a>.*</td>
+</tr>
+<tr>
+<td>最后选择使用正在表达式才匹配的server_name</td>
+<td>最后选择使用正在表达式才匹配的server_name</td>
+</tr>
+</tbody></table>
+<p>location的匹配规则  </p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">=</td>
+<td align="center">表示把URI作为字符串， 以便与参数中的uri做完全匹配。</td>
+</tr>
+<tr>
+<td align="center">~</td>
+<td align="center">表示匹配URI时是字母大小写敏感的</td>
+</tr>
+<tr>
+<td align="center">~*</td>
+<td align="center">表示匹配URI时忽略字母大小写问题</td>
+</tr>
+<tr>
+<td align="center">^~</td>
+<td align="center">表示匹配URI时只需要其前半部分与uri参数匹配即可</td>
+</tr>
+<tr>
+<td align="center">@</td>
+<td align="center">仅用于Nginx服务内部请求之间的重定向， 带有@的location不直接处理用户请求</td>
+</tr>
+</tbody></table>
+<p>root和alias区别</p>
+<blockquote>
+<p>如果有一个请求的URI是/conf/nginx.conf， 而用户实际想访问的文件<br>在usr/local/nginx/conf/nginx.conf。 </p>
+<p>alias：</p>
+<p>alias在实际文件路径的映射过程中，已经将location后配置的/conf这部分去掉了</p>
+<pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">conf</span> &#123;
+	alias usr/local/nginx/conf/;
+&#125;</code></pre>
+
+<p>root:</p>
+<p>而root没有去掉，这也是root可以放置到其他http、server等中，而alias只能放置location中的原因</p>
+<pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">conf</span>&#123;
+	root usr/local/nginx/;
+&#125;</code></pre>
+
+
+
+<p>alias还可以添加正则表达式：</p>
+<pre><code class="hljs elixir">location ~ ^<span class="hljs-regexp">/test/</span>(\w+)\.(\w+)<span class="hljs-variable">$ </span>&#123;
+	<span class="hljs-keyword">alias</span> usrlocal/nginx/<span class="hljs-variable">$2</span>/<span class="hljs-variable">$1</span>.<span class="hljs-variable">$2</span>;
+&#125;</code></pre>
+
+<p>请求访问/test/nginx.conf时，返回usr/local/nginx/conf/nginx.conf</p>
+</blockquote>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/2020-05/">2020-05</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Liunx/">Liunx</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Nginx/">Nginx</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/31/06%20Zuul%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1%E9%9B%86%E6%88%90%E9%98%BF%E6%B3%A2%E7%BD%97%E5%8F%8ASwagger%E6%96%87%E6%A1%A3%E9%85%8D%E7%BD%AE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Zuul网关服务集成阿波罗及Swagger文档配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/31/04%20%E6%90%BA%E7%A8%8B%E9%98%BF%E6%B3%A2%E7%BD%97%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">
+                        <span class="hidden-mobile">携程阿波罗分布式配置中心</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js" ></script>
+
+  <script type="text/javascript">
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+
+      new Valine({
+        el: "#vcomments",
+        app_id: "5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz",
+        app_key: "34jqtpneAbJft4I56LcsIwlQ",
+        placeholder: "",
+        path: window.location.pathname,
+        avatar: "retro",
+        meta: ["nick","mail","link"],
+        pageSize: "10",
+        lang: "zh-CN",
+        highlight: true,
+        recordIP: true,
+        serverURLs: "https://5o5kl2lb.lc-cn-n1-shared.com",
+      });
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'true' === 'true',
+      loop: 'all',
+      order: 'list',
+      theme: '#FF3366',
+      preload: 'none',
+      audio: [{"name":"错季","artist":"秋原依","url":"/songs/秋原依 - 错季.flac","cover":"/songs/img/秋原依 - 错季.jpg"},{"name":"飞鸟和蝉","artist":"任然","url":"/songs/任然-飞鸟和蝉.flac","cover":"/songs/img/任然-飞鸟和蝉.jpg"},{"name":"刚刚好","artist":"邓园长","url":"/songs/刚刚好.mp3","cover":"/songs/img/刚刚好.jpg"},{"name":"迷失幻境","artist":"IN-K 王忻辰","url":"/songs/IN-K 王忻辰 - 迷失幻境.mp3","cover":"/songs/img/IN-K 王忻辰 - 迷失幻境.jpg"},{"name":"用力活着","artist":"张茜","url":"/songs/张茜 - 用力活着.flac","cover":"/songs/img/张茜 - 用力活着.jpg"},{"name":"善变","artist":"王靖雯不胖","url":"/songs/王靖雯不胖 - 善变.flac","cover":"/songs/img/王靖雯不胖 - 善变.jpg"},{"name":"AEBD","artist":"亦柯","url":"/songs/亦柯 - AEBD.mp3","cover":"/songs/img/AEBD.jpg"},{"name":"不知所措","artist":"王靖雯不胖","url":"/songs/王靖雯不胖-不知所措.flac","cover":"/songs/img/王靖雯不胖-不知所措.jpg"},{"name":"挥霍","artist":"高鱼","url":"/songs/高鱼-挥霍.flac","cover":"/songs/img/高鱼-挥霍.jpg"},{"name":"隔岸观火","artist":"高源","url":"/songs/高源-隔岸观火.flac","cover":"/songs/img/高源-隔岸观火.jpg"},{"name":"If（翻自 丁可）","artist":"七元","url":"/songs/七元 - If（翻自 丁可）.flac","cover":"/songs/img/七元 - If（翻自 丁可）.jpg"},{"name":"回到夏天","artist":"做七爷/爱写歌的小田","url":"/songs/回到夏天.mp3","cover":"/songs/img/回到夏天.png"},{"name":"MOM","artist":"你的二智bb","url":"/songs/MOM.mp3","cover":"/songs/img/MOM.jpg"},{"name":"写给黄淮","artist":"解忧邵帅","url":"/songs/写给黄淮.mp3","cover":"/songs/img/写给黄淮.jpg"},{"name":"Read All About It","artist":"THEO","url":"/songs/Read All About It.mp3","cover":"/songs/img/Read All About It.jpg"},{"name":"Can We Kiss Forever.mp3","artist":"Kina,Adriana Proenza","url":"/songs/Kina,Adriana Proenza - Can We Kiss Forever.mp3","cover":"/songs/img/Can We Kiss Forever.jpg"},{"name":"MELANCHOLY","artist":"White Cherry","url":"/songs/White Cherry - MELANCHOLY.mp3","cover":"/songs/img/MELANCHOLY.jpg"},{"name":"round and round","artist":"晴桑呀","url":"/songs/晴桑呀 - round and round(原版音乐).mp3","cover":"/songs/img/Round and round.jpg"},{"name":"Girls Like You（toby randall）（翻自 J.Fla）","artist":"AGAM","url":"/songs/AGAM - Girls Like You（toby randall）（翻自 J.Fla）.flac","cover":"/songs/img/AGAM - Girls Like You（toby randall）.jpg"},{"name":"过活","artist":"高鱼","url":"/songs/高鱼 - 过活.mp3","cover":"/songs/img/高鱼-过活.jfif"},{"name":"晚婚","artist":"隔壁老樊","url":"/songs/晚婚 - 隔壁老樊.m4a","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"理想三旬","artist":"陈鸿宇","url":"/songs/理想三旬.mp3","cover":"/songs/img/理想三旬.jpg"},{"name":"多想在平庸的生活拥抱你","artist":"隔壁老樊","url":"/songs/多想在平庸的生活拥抱你.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"我曾","artist":"隔壁老樊","url":"/songs/我曾.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"得不到你","artist":"隔壁老樊","url":"/songs/得不到你.mp3","cover":"/songs/img/得不到你.jpg"},{"name":"这一生关于你的风景","artist":"隔壁老樊","url":"/songs/这一生关于你的风景.mp3","cover":"/songs/img/这一生关于你的风景.jfif"},{"name":"那个女孩对我说","artist":"戴羽彤","url":"/songs/那个女孩对我说.mp3","cover":"/songs/img/那个女孩对我说.png"}]
+    });
+  }
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+    <div class="text-center py-3">
+        <div>
+            <i class="iconfont icon-love"></i>
+            <span>将喜欢的一切留在身边 这便是努力的意义</span></a>
+            <i class="iconfont icon-love"></i>
+        </div>
+        
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+        
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">陕ICP备20008687号-1</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61011302000993"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>陕公网安备 61011302000993号</span>
+      </a>
+     
+  </div>
+
+
+        
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer>
+  (function () {
+    // 查询存储的记录
+    function getRecord(Counter, target) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {target, time: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    }
+
+    // 发起自增请求
+    function increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    }
+
+    // 构建自增请求体
+    function buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "time": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    }
+
+    // 校验是否为有效的 UV
+    function validUV() {
+      var key = 'LeanCloud_UV_Flag';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    }
+
+    function addCount(Counter) {
+      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
+      var getterArr = [];
+      var incrArr = [];
+
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#leancloud-site-pv-container');
+      if (pvCtn || enableIncr) {
+        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
+          incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-pv');
+          if (ele) {
+            ele.innerText = record.time + 1;
+            if (pvCtn) {
+              pvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#leancloud-site-uv-container');
+      if (uvCtn || enableIncr) {
+        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
+          var vuv = validUV();
+          vuv && incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-uv');
+          if (ele) {
+            ele.innerText = record.time + (vuv ? 1 : 0);
+            if (uvCtn) {
+              uvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 如果是文章，请求文章的浏览数，并自增
+      if ('true' === 'true') {
+        var viewCtn = document.querySelector('#leancloud-post-views-container');
+        if (viewCtn || enableIncr) {
+          var target = decodeURI('/2020/05/31/05%20Nginx%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99/');
+          var viewGetter = getRecord(Counter, target).then((record) => {
+            incrArr.push(buildIncrement(record.objectId))
+            if (viewCtn) {
+              var ele = document.querySelector('#leancloud-post-views');
+              if (ele) {
+                ele.innerText = (record.time || 0) + 1;
+                viewCtn.style.display = 'inline';
+              }
+            }
+          });
+          getterArr.push(viewGetter);
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && increment(Counter, incrArr);
+        })
+      }
+    }
+
+    var app_id = '5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz'
+    var app_key = '34jqtpneAbJft4I56LcsIwlQ'
+    var server_url = 'https://5o5kl2lb.lc-cn-n1-shared.com'
+
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': app_id,
+            'X-LC-Key': app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+
+      addCount(Counter);
+    }
+
+    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(resp => resp.json())
+        .then(({api_server}) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Nginx相关资料&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#000">
+  <meta name="description" content="清醒 识趣 努力 优秀 不负余生🍃">
+  <meta name="author" content="karma">
+  <meta name="keywords" content="">
+  <title>16 React.js之React Hooks使用 - Karma の 小屋</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karma の Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-11-12 09:30">
+      2020年11月12日 上午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      40
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-post-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p><strong><em>仅供个人学习使用，源码请见文件末尾</em></strong></p>
+<h4 id="1-React-Hooks简介"><a href="#1-React-Hooks简介" class="headerlink" title="1.React Hooks简介"></a>1.React Hooks简介</h4><blockquote>
+<p><code>React Hooks</code>就是用函数的形式代替原来的继承类的形式，并且使用预函数的形式管理<code>state</code>，有Hooks可以不再使用类的形式定义组件了。这时候你的认知也要发生变化了，原来把组件分为有状态组件和无状态组件，有状态组件用类的形式声明，无状态组件用函数的形式声明。那现在所有的组件都可以用函数来声明了。</p>
+</blockquote>
+<h4 id="2-useState多状态声明"><a href="#2-useState多状态声明" class="headerlink" title="2.useState多状态声明"></a>2.useState多状态声明</h4><blockquote>
+<p><code>useState</code>是react自带的一个hook函数，它的作用是用来声明状态变量。</p>
+</blockquote>
+<pre><code class="hljs javascript"><span class="hljs-keyword">const</span> [ count , setCount ] = useState(<span class="hljs-number">0</span>);</code></pre>
+
+<p><code>useState</code>这个函数接收的参数是状态的初始值(Initial state)，它返回一个数组，这个数组的第0位是当前的状态值，第1位是可以改变状态值的方法函数。 所以上面的代码的意思就是声明了一个状态变量为count，并把它的初始值设为0，同时提供了一个可以改变<code>count</code>的状态值的方法函数。</p>
+<p>接下来如何读取状态中的值</p>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></code></pre>
+
+<p>最后改变<code>State</code>中的值</p>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span>=&gt;</span>&#123;setCount(count+1)&#125;&#125;&gt;click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></code></pre>
+
+<p>直接调用setCount函数，这个函数接收的参数是修改过的新状态值。</p>
+<p>注意：<strong>React是根据useState出现的顺序来确定的</strong></p>
+<h4 id="3-useEffect代替生命周期函数"><a href="#3-useEffect代替生命周期函数" class="headerlink" title="3.useEffect代替生命周期函数"></a>3.useEffect代替生命周期函数</h4><blockquote>
+<p>使用useEffect代替两个生命周期函数<code>componentDidMount</code>和<code>componentDidUpdate</code>。</p>
+</blockquote>
+<p>案例如下：</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">import</span> React, &#123; useState , useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [ count , setCount ] = useState(<span class="hljs-number">0</span>);
+    <span class="hljs-comment">//---关键代码---------start-------</span>
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`useEffect=&gt;You clicked <span class="hljs-subst">$&#123;count&#125;</span> times`</span>)
+    &#125;)
+    <span class="hljs-comment">//---关键代码---------end-------</span>
+
+    <span class="hljs-keyword">return</span> (
+        &lt;div&gt;
+            &lt;p&gt;You clicked &#123;count&#125; times&lt;<span class="hljs-regexp">/p&gt;</span>
+<span class="hljs-regexp">            &lt;button onClick=&#123;()=&gt;&#123;setCount(count+1)&#125;&#125;&gt;click me&lt;/</span>button&gt;
+        &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">    )</span>
+<span class="hljs-regexp">&#125;</span>
+<span class="hljs-regexp">export default Example;</span></code></pre>
+
+<p>useEffect需注意事项：</p>
+<blockquote>
+<ol>
+<li>React首次渲染和之后的每次渲染都会调用一遍<code>useEffect</code>函数，而之前我们要用两个生命周期函数分别表示首次渲染(componentDidMonut)和更新导致的重新渲染(componentDidUpdate)。</li>
+<li>useEffect中定义的函数的执行不会阻碍浏览器更新视图，也就是说这些函数时异步执行的，而<code>componentDidMonut</code>和<code>componentDidUpdate</code>中的代码都是同步执行的。</li>
+</ol>
+</blockquote>
+<h4 id="4-useEffect实现componentWillUnmount生命周期函数"><a href="#4-useEffect实现componentWillUnmount生命周期函数" class="headerlink" title="4.useEffect实现componentWillUnmount生命周期函数"></a>4.useEffect实现componentWillUnmount生命周期函数</h4><blockquote>
+<p>componentWillUnmount生命周期函数：组件将要被卸载时执行.</p>
+</blockquote>
+<h5 id="useEffect解绑副作用"><a href="#useEffect解绑副作用" class="headerlink" title="useEffect解绑副作用"></a>useEffect解绑副作用</h5><p>学习<code>React Hooks</code> 时，要改掉生命周期函数的概念，因为<code>Hooks</code>叫它副作用，所以<code>componentWillUnmount</code>也可以理解成解绑副作用。这里用<code>useEffect</code>来实现类似<code>componentWillUnmount</code>效果，先安装<code>React-Router</code>路由,进入项目根本录，使用<code>npm</code>进行安装。</p>
+<pre><code class="hljs shell">npm install --save react-router-dom</code></pre>
+
+<p>然后打开<code>Example.js</code>文件，进行改写代码，先引入对应的<code>React-Router</code>组件。</p>
+<pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; BrowserRouter <span class="hljs-keyword">as</span> Router, Route, Link &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">"react-router-dom"</span></code></pre>
+
+<p>在文件中编写两个新组件，因为这两个组件都非常的简单，所以就不单独建立一个新的文件来写了。</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Index</span>(<span class="hljs-params"></span>) </span>&#123;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Index Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">List</span>(<span class="hljs-params"></span>) </span>&#123;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>List-Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+&#125;</code></pre>
+
+<p>有了这两个组件后，接下来可以编写路由配置，在以前的计数器代码中直接增加就可以了。</p>
+<pre><code class="hljs js"><span class="hljs-keyword">return</span> (
+    &lt;div&gt;
+        &lt;p&gt;You clicked &#123;count&#125; times&lt;<span class="hljs-regexp">/p&gt;</span>
+<span class="hljs-regexp">        &lt;button onClick=&#123;()=&gt;&#123;setCount(count+1)&#125;&#125;&gt;click me&lt;/</span>button&gt;
+
+        &lt;Router&gt;
+            &lt;ul&gt;
+                &lt;li&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/"</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span> &lt;<span class="hljs-regexp">/li&gt;</span>
+<span class="hljs-regexp">                &lt;li&gt;&lt;Link to="/</span>list/<span class="hljs-string">"&gt;列表&lt;/Link&gt; &lt;/li&gt;</span>
+<span class="hljs-string">            &lt;/ul&gt;</span>
+<span class="hljs-string">            &lt;Route path="</span>/<span class="hljs-string">" exact component=&#123;Index&#125; /&gt;</span>
+<span class="hljs-string">            &lt;Route path="</span>/list/<span class="hljs-string">" component=&#123;List&#125; /&gt;</span>
+<span class="hljs-string">        &lt;/Router&gt;</span>
+<span class="hljs-string">    &lt;/div&gt;</span>
+<span class="hljs-string">)</span></code></pre>
+
+<p>然后到浏览器中查看一下，看看组件和路由是否可用。如果可用，我们现在可以调整<code>useEffect</code>了。在两个新组件中分别加入<code>useEffect()</code>函数:</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Index</span>(<span class="hljs-params"></span>) </span>&#123;
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'useEffect=&gt;老弟，你来了！Index页面'</span>)
+        )
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Index page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">List</span>(<span class="hljs-params"></span>) </span>&#123;
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'useEffect=&gt;老弟，你来了！List页面'</span>)
+    &#125;)
+
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>List-Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+&#125;</code></pre>
+
+<p>这时候我们点击<code>Link</code>进入任何一个组件，在浏览器中都会打印出对应的一段话。这时候可以用<strong>返回一个函数的形式进行解绑</strong>，代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Index</span>(<span class="hljs-params"></span>) </span>&#123;
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'useEffect=&gt;老弟你来了！Index页面'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'老弟，你走了!Index页面'</span>)
+        &#125;
+    &#125;)
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>JSPang.com<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+  &#125;</code></pre>
+
+<p>这时候你在浏览器中预览，我们仿佛实现了<code>componentWillUnmount</code>方法。但这只是好像实现了，当点击计数器按钮时，你会发现<code>老弟，你走了!Index页面</code>，也出现了。这到底是怎么回事呐？其实每次状态发生变化，<code>useEffect</code>都进行了解绑。</p>
+<h5 id="useEffect的第二个参数"><a href="#useEffect的第二个参数" class="headerlink" title="useEffect的第二个参数"></a>useEffect的第二个参数</h5><p>如何实现类似<code>componentWillUnmount</code>的效果那?这就需要请出<code>useEffect</code>的第二个参数，它是一个数组，数组中可以写入很多状态对应的变量，意思是当状态值发生变化时，我们才进行解绑。但是当传空数组<code>[]</code>时，就是当组件将被销毁时才进行解绑，这也就实现了<code>componentWillUnmount</code>的生命周期函数。</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Index</span>(<span class="hljs-params"></span>) </span>&#123;
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'useEffect=&gt;老弟你来了！Index页面'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'老弟，你走了!Index页面'</span>)
+        &#125;
+    &#125;,[])
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Index Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>;
+&#125;</code></pre>
+
+<p>为了更加深入了解第二个参数的作用，把计数器的代码也加上<code>useEffect</code>和解绑方法，并加入第二个参数为空数组。代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [ count , setCount ] = useState(<span class="hljs-number">0</span>);
+
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`useEffect=&gt;You clicked <span class="hljs-subst">$&#123;count&#125;</span> times`</span>)
+
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'===================='</span>)
+        &#125;
+    &#125;,[])
+
+    <span class="hljs-keyword">return</span> (
+        &lt;div&gt;
+            &lt;p&gt;You clicked &#123;count&#125; times&lt;<span class="hljs-regexp">/p&gt;</span>
+<span class="hljs-regexp">            &lt;button onClick=&#123;()=&gt;&#123;setCount(count+1)&#125;&#125;&gt;click me&lt;/</span>button&gt;
+
+            &lt;Router&gt;
+                &lt;ul&gt;
+                    &lt;li&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/"</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span> &lt;<span class="hljs-regexp">/li&gt;</span>
+<span class="hljs-regexp">                    &lt;li&gt;&lt;Link to="/</span>list/<span class="hljs-string">"&gt;列表&lt;/Link&gt; &lt;/li&gt;</span>
+<span class="hljs-string">                &lt;/ul&gt;</span>
+<span class="hljs-string">                &lt;Route path="</span>/<span class="hljs-string">" exact component=&#123;Index&#125; /&gt;</span>
+<span class="hljs-string">                &lt;Route path="</span>/list/<span class="hljs-string">" component=&#123;List&#125; /&gt;</span>
+<span class="hljs-string">            &lt;/Router&gt;</span>
+<span class="hljs-string">        &lt;/div&gt;</span>
+<span class="hljs-string">    )</span>
+<span class="hljs-string">&#125;</span></code></pre>
+
+<p>这时候的代码是不能执行解绑副作用函数的。但是如果我们想每次<code>count</code>发生变化，我们都进行解绑，只需要在第二个参数的数组里加入<code>count</code>变量就可以了。代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [ count , setCount ] = useState(<span class="hljs-number">0</span>);
+
+    useEffect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`useEffect=&gt;You clicked <span class="hljs-subst">$&#123;count&#125;</span> times`</span>)
+
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'===================='</span>)
+        &#125;
+    &#125;,[count])
+
+    <span class="hljs-keyword">return</span> (
+        &lt;div&gt;
+            &lt;p&gt;You clicked &#123;count&#125; times&lt;<span class="hljs-regexp">/p&gt;</span>
+<span class="hljs-regexp">            &lt;button onClick=&#123;()=&gt;&#123;setCount(count+1)&#125;&#125;&gt;click me&lt;/</span>button&gt;
+
+            &lt;Router&gt;
+                &lt;ul&gt;
+                    &lt;li&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/"</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span> &lt;<span class="hljs-regexp">/li&gt;</span>
+<span class="hljs-regexp">                    &lt;li&gt;&lt;Link to="/</span>list/<span class="hljs-string">"&gt;列表&lt;/Link&gt; &lt;/li&gt;</span>
+<span class="hljs-string">                &lt;/ul&gt;</span>
+<span class="hljs-string">                &lt;Route path="</span>/<span class="hljs-string">" exact component=&#123;Index&#125; /&gt;</span>
+<span class="hljs-string">                &lt;Route path="</span>/list/<span class="hljs-string">" component=&#123;List&#125; /&gt;</span>
+<span class="hljs-string">            &lt;/Router&gt;</span>
+<span class="hljs-string">        &lt;/div&gt;</span>
+<span class="hljs-string">    )</span>
+<span class="hljs-string">&#125;</span></code></pre>
+
+<p>这时候只要<code>count</code>状态发生变化，都会执行解绑副作用函数，浏览器的控制台也就打印出了一串<code>=================</code>。</p>
+<h4 id="5-useContext父子组件传值"><a href="#5-useContext父子组件传值" class="headerlink" title="5.useContext父子组件传值"></a>5.useContext父子组件传值</h4><p>在用类声明组件时，父子组件的传值是通过组件属性和<code>props</code>进行的，那现在使用方法(Function)来声明组件，已经没有了<code>constructor</code>构造函数也就没有了props的接收，那父子组件的传值就成了一个问题。<code>React Hooks</code> 为我们准备了<code>useContext</code>。<code>useContext</code>它可以帮助我们跨越组件层级直接传递变量，实现共享。需要注意的是<code>useContext</code>和<code>redux</code>的作用是不同的，一个解决的是组件之间值传递的问题，一个是应用中统一管理状态的问题，但通过和<code>useReducer</code>的配合使用，可以实现类似<code>Redux</code>的作用。</p>
+<blockquote>
+<p><code>Context</code>的作用就是对它所包含的组件树提供全局共享数据的一种技术。</p>
+</blockquote>
+<h5 id="createContext函数创建context"><a href="#createContext函数创建context" class="headerlink" title="createContext函数创建context"></a>createContext函数创建context</h5><pre><code class="hljs js"><span class="hljs-keyword">import</span> React, &#123; useState , createContext &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-comment">//===关键代码</span>
+<span class="hljs-keyword">const</span> CountContext = createContext()
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example4</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [ count , setCount ] = useState(<span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">return</span> (
+        &lt;div&gt;
+            &lt;p&gt;You clicked &#123;count&#125; times&lt;<span class="hljs-regexp">/p&gt;</span>
+<span class="hljs-regexp">            &lt;button onClick=&#123;()=&gt;&#123;setCount(count+1)&#125;&#125;&gt;click me&lt;/</span>button&gt;
+            &#123;<span class="hljs-comment">/*======关键代码 */</span>&#125;
+            &lt;CountContext.Provider value=&#123;count&#125;&gt;
+            &lt;<span class="hljs-regexp">/CountContext.Provider&gt;</span>
+<span class="hljs-regexp"></span>
+<span class="hljs-regexp">        &lt;/</span>div&gt;
+    )
+&#125;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Example4;</code></pre>
+
+<h5 id="useContext接收上下文变量"><a href="#useContext接收上下文变量" class="headerlink" title="useContext接收上下文变量"></a>useContext接收上下文变量</h5><p>已经有了上下文变量，剩下的就是如何接收了，接收这个直接使用useContext就可以，但是在使用前需要新进行引入<code>useContext</code>。</p>
+<pre><code class="hljs js"><span class="hljs-keyword">import</span> React, &#123; useState , createContext , useContext &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</code></pre>
+
+<p>引入后写一个<code>Counter</code>组件，只是显示上下文中的<code>count</code>变量代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> count = useContext(CountContext)  <span class="hljs-comment">//一句话就可以得到count</span>
+    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)
+&#125;</code></pre>
+
+<p>得到后就可以显示出来了，但是要记得在<code>&lt;CountContext.Provider&gt;</code>的闭合标签中,代码如下。</p>
+<pre><code class="hljs js">&lt;CountContext.Provider value=&#123;count&#125;&gt;
+    &lt;Counter /&gt;
+&lt;<span class="hljs-regexp">/CountContext.Provider&gt;</span></code></pre>
+
+<h4 id="6-useReducer的使用"><a href="#6-useReducer的使用" class="headerlink" title="6.useReducer的使用"></a>6.useReducer的使用</h4><blockquote>
+<p><code>reducer</code>是一个函数，这个函数接收两个参数，一个是状态，一个用来控制业务逻辑的判断参数。</p>
+</blockquote>
+<p>新建一个js文件，然后用useReducer实现计数器的加减双向操作。</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">import</span> React, &#123; useReducer &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ReducerDemo</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [ count , dispatch ] =useReducer(<span class="hljs-function">(<span class="hljs-params">state,action</span>)=&gt;</span>&#123;
+        <span class="hljs-keyword">switch</span>(action)&#123;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'add'</span>:
+                <span class="hljs-keyword">return</span> state+<span class="hljs-number">1</span>
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'sub'</span>:
+                <span class="hljs-keyword">return</span> state<span class="hljs-number">-1</span>
+            <span class="hljs-keyword">default</span>:
+                <span class="hljs-keyword">return</span> state
+        &#125;
+    &#125;,<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> (
+       &lt;div&gt;
+           &lt;h2&gt;现在的分数是&#123;count&#125;&lt;<span class="hljs-regexp">/h2&gt;</span>
+<span class="hljs-regexp">           &lt;button onClick=&#123;()=&gt;dispatch('add')&#125;&gt;Increment&lt;/</span>button&gt;
+           &lt;button onClick=&#123;()=&gt;dispatch(<span class="hljs-string">'sub'</span>)&#125;&gt;Decrement&lt;<span class="hljs-regexp">/button&gt;</span>
+<span class="hljs-regexp">       &lt;/</span>div&gt;
+    )
+
+&#125;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ReducerDemo</code></pre>
+
+<h4 id="7-useMemo优化性能"><a href="#7-useMemo优化性能" class="headerlink" title="7.useMemo优化性能"></a>7.useMemo优化性能</h4><p><code>useMemo</code>主要用来解决使用React hooks产生的无用渲染的性能问题。使用function的形式来声明组件，失去了<code>shouldCompnentUpdate</code>（在组件更新之前）这个生命周期，也就是说我们没有办法通过组件更新前条件来决定组件是否更新。而且在函数组件中，也不再区分<code>mount</code>和<code>update</code>两个状态，这意味着函数组件的每一次调用都会执行内部的所有逻辑，就带来了非常大的性能损耗。<code>useMemo</code>和<code>useCallback</code>都是解决上述性能问题的。<code>useCallback</code>，目的是为了缓存方法(useMemo是为了缓存变量)。</p>
+<pre><code class="hljs js"><span class="hljs-keyword">import</span> React , &#123;useState,useMemo&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example7</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">const</span> [xiaohong , setXiaohong] = useState(<span class="hljs-string">'小红待客状态'</span>)
+    <span class="hljs-keyword">const</span> [zhiling , setZhiling] = useState(<span class="hljs-string">'志玲待客状态'</span>)
+    <span class="hljs-keyword">return</span> (
+        &lt;&gt;
+            &lt;button onClick=&#123;()=&gt;&#123;setXiaohong(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime())&#125;&#125;&gt;小红&lt;<span class="hljs-regexp">/button&gt;</span>
+<span class="hljs-regexp">            &lt;button onClick=&#123;()=&gt;&#123;setZhiling(new Date().getTime()+',志玲向我们走来了')&#125;&#125;&gt;志玲&lt;/</span>button&gt;
+            &lt;ChildComponent name=&#123;xiaohong&#125;&gt;&#123;zhiling&#125;&lt;<span class="hljs-regexp">/ChildComponent&gt;</span>
+<span class="hljs-regexp">        &lt;/</span>&gt;
+    )
+&#125;</code></pre>
+
+<p>父组件调用了子组件，子组件我们输出两个姑娘的状态，显示在界面上。代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ChildComponent</span>(<span class="hljs-params">&#123;name,children&#125;</span>)</span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeXiaohong</span>(<span class="hljs-params">name</span>)</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'她来了，她来了。小红向我们走来了'</span>)
+        <span class="hljs-keyword">return</span> name+<span class="hljs-string">',小红向我们走来了'</span>
+    &#125;
+
+    <span class="hljs-keyword">const</span> actionXiaohong = changeXiaohong(name)
+    <span class="hljs-keyword">return</span> (
+        &lt;&gt;
+            &lt;div&gt;&#123;actionXiaohong&#125;&lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">            &lt;div&gt;&#123;children&#125;&lt;/</span>div&gt;
+        &lt;<span class="hljs-regexp">/&gt;</span>
+<span class="hljs-regexp">    )</span>
+<span class="hljs-regexp">&#125;</span></code></pre>
+
+<p>其实只要使用<code>useMemo</code>，然后给她传递第二个参数，参数匹配成功，才会执行。代码如下：</p>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ChildComponent</span>(<span class="hljs-params">&#123;name,children&#125;</span>)</span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeXiaohong</span>(<span class="hljs-params">name</span>)</span>&#123;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'她来了，她来了。小红向我们走来了'</span>)
+        <span class="hljs-keyword">return</span> name+<span class="hljs-string">',小红向我们走来了'</span>
+    &#125;
+
+    <span class="hljs-keyword">const</span> actionXiaohong = useMemo(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>changeXiaohong(name),[name]) 
+    <span class="hljs-keyword">return</span> (
+        &lt;&gt;
+            &lt;div&gt;&#123;actionXiaohong&#125;&lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">            &lt;div&gt;&#123;children&#125;&lt;/</span>div&gt;
+        &lt;<span class="hljs-regexp">/&gt;</span>
+<span class="hljs-regexp">    )</span>
+<span class="hljs-regexp">&#125;</span></code></pre>
+
+<h4 id="8-useRef获取DOM元素和变量"><a href="#8-useRef获取DOM元素和变量" class="headerlink" title="8.useRef获取DOM元素和变量"></a>8.useRef获取DOM元素和变量</h4><blockquote>
+<p>两个主要的作用:</p>
+<ul>
+<li>用<code>useRef</code>获取React JSX中的DOM元素，获取后你就可以控制DOM的任何东西了。但是一般不建议这样来作，React界面的变化可以通过状态来控制。</li>
+<li>用<code>useRef</code>来保存变量.</li>
+</ul>
+</blockquote>
+<p>源码地址：<a href="https://github.com/kay-520/React_study/tree/master/demo12-React%20Hooks" target="_blank" rel="noopener">传送门</a> 参考src/index.js中注释</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/2020-11/">2020-11</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/12/39%20React%E8%84%9A%E6%89%8B%E6%9E%B6%E4%B9%8BNextJs/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">17 React脚手架之NextJs</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/04/37%20React-router%E8%B7%AF%E7%94%B1/">
+                        <span class="hidden-mobile">15 React-router路由</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js" ></script>
+
+  <script type="text/javascript">
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+
+      new Valine({
+        el: "#vcomments",
+        app_id: "5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz",
+        app_key: "34jqtpneAbJft4I56LcsIwlQ",
+        placeholder: "",
+        path: window.location.pathname,
+        avatar: "retro",
+        meta: ["nick","mail","link"],
+        pageSize: "10",
+        lang: "zh-CN",
+        highlight: true,
+        recordIP: true,
+        serverURLs: "https://5o5kl2lb.lc-cn-n1-shared.com",
+      });
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'true' === 'true',
+      loop: 'all',
+      order: 'list',
+      theme: '#FF3366',
+      preload: 'none',
+      audio: [{"name":"错季","artist":"秋原依","url":"/songs/秋原依 - 错季.flac","cover":"/songs/img/秋原依 - 错季.jpg"},{"name":"飞鸟和蝉","artist":"任然","url":"/songs/任然-飞鸟和蝉.flac","cover":"/songs/img/任然-飞鸟和蝉.jpg"},{"name":"刚刚好","artist":"邓园长","url":"/songs/刚刚好.mp3","cover":"/songs/img/刚刚好.jpg"},{"name":"迷失幻境","artist":"IN-K 王忻辰","url":"/songs/IN-K 王忻辰 - 迷失幻境.mp3","cover":"/songs/img/IN-K 王忻辰 - 迷失幻境.jpg"},{"name":"用力活着","artist":"张茜","url":"/songs/张茜 - 用力活着.flac","cover":"/songs/img/张茜 - 用力活着.jpg"},{"name":"善变","artist":"王靖雯不胖","url":"/songs/王靖雯不胖 - 善变.flac","cover":"/songs/img/王靖雯不胖 - 善变.jpg"},{"name":"AEBD","artist":"亦柯","url":"/songs/亦柯 - AEBD.mp3","cover":"/songs/img/AEBD.jpg"},{"name":"不知所措","artist":"王靖雯不胖","url":"/songs/王靖雯不胖-不知所措.flac","cover":"/songs/img/王靖雯不胖-不知所措.jpg"},{"name":"挥霍","artist":"高鱼","url":"/songs/高鱼-挥霍.flac","cover":"/songs/img/高鱼-挥霍.jpg"},{"name":"隔岸观火","artist":"高源","url":"/songs/高源-隔岸观火.flac","cover":"/songs/img/高源-隔岸观火.jpg"},{"name":"If（翻自 丁可）","artist":"七元","url":"/songs/七元 - If（翻自 丁可）.flac","cover":"/songs/img/七元 - If（翻自 丁可）.jpg"},{"name":"回到夏天","artist":"做七爷/爱写歌的小田","url":"/songs/回到夏天.mp3","cover":"/songs/img/回到夏天.png"},{"name":"MOM","artist":"你的二智bb","url":"/songs/MOM.mp3","cover":"/songs/img/MOM.jpg"},{"name":"写给黄淮","artist":"解忧邵帅","url":"/songs/写给黄淮.mp3","cover":"/songs/img/写给黄淮.jpg"},{"name":"Read All About It","artist":"THEO","url":"/songs/Read All About It.mp3","cover":"/songs/img/Read All About It.jpg"},{"name":"Can We Kiss Forever.mp3","artist":"Kina,Adriana Proenza","url":"/songs/Kina,Adriana Proenza - Can We Kiss Forever.mp3","cover":"/songs/img/Can We Kiss Forever.jpg"},{"name":"MELANCHOLY","artist":"White Cherry","url":"/songs/White Cherry - MELANCHOLY.mp3","cover":"/songs/img/MELANCHOLY.jpg"},{"name":"round and round","artist":"晴桑呀","url":"/songs/晴桑呀 - round and round(原版音乐).mp3","cover":"/songs/img/Round and round.jpg"},{"name":"Girls Like You（toby randall）（翻自 J.Fla）","artist":"AGAM","url":"/songs/AGAM - Girls Like You（toby randall）（翻自 J.Fla）.flac","cover":"/songs/img/AGAM - Girls Like You（toby randall）.jpg"},{"name":"过活","artist":"高鱼","url":"/songs/高鱼 - 过活.mp3","cover":"/songs/img/高鱼-过活.jfif"},{"name":"晚婚","artist":"隔壁老樊","url":"/songs/晚婚 - 隔壁老樊.m4a","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"理想三旬","artist":"陈鸿宇","url":"/songs/理想三旬.mp3","cover":"/songs/img/理想三旬.jpg"},{"name":"多想在平庸的生活拥抱你","artist":"隔壁老樊","url":"/songs/多想在平庸的生活拥抱你.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"我曾","artist":"隔壁老樊","url":"/songs/我曾.mp3","cover":"/songs/img/多想在平庸的生活拥抱你.jpg"},{"name":"得不到你","artist":"隔壁老樊","url":"/songs/得不到你.mp3","cover":"/songs/img/得不到你.jpg"},{"name":"这一生关于你的风景","artist":"隔壁老樊","url":"/songs/这一生关于你的风景.mp3","cover":"/songs/img/这一生关于你的风景.jfif"},{"name":"那个女孩对我说","artist":"戴羽彤","url":"/songs/那个女孩对我说.mp3","cover":"/songs/img/那个女孩对我说.png"}]
+    });
+  }
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+    <div class="text-center py-3">
+        <div>
+            <i class="iconfont icon-love"></i>
+            <span>将喜欢的一切留在身边 这便是努力的意义</span></a>
+            <i class="iconfont icon-love"></i>
+        </div>
+        
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+        
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">陕ICP备20008687号-1</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61011302000993"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>陕公网安备 61011302000993号</span>
+      </a>
+     
+  </div>
+
+
+        
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer>
+  (function () {
+    // 查询存储的记录
+    function getRecord(Counter, target) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {target, time: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    }
+
+    // 发起自增请求
+    function increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    }
+
+    // 构建自增请求体
+    function buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "time": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    }
+
+    // 校验是否为有效的 UV
+    function validUV() {
+      var key = 'LeanCloud_UV_Flag';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    }
+
+    function addCount(Counter) {
+      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
+      var getterArr = [];
+      var incrArr = [];
+
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#leancloud-site-pv-container');
+      if (pvCtn || enableIncr) {
+        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
+          incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-pv');
+          if (ele) {
+            ele.innerText = record.time + 1;
+            if (pvCtn) {
+              pvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#leancloud-site-uv-container');
+      if (uvCtn || enableIncr) {
+        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
+          var vuv = validUV();
+          vuv && incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-uv');
+          if (ele) {
+            ele.innerText = record.time + (vuv ? 1 : 0);
+            if (uvCtn) {
+              uvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 如果是文章，请求文章的浏览数，并自增
+      if ('true' === 'true') {
+        var viewCtn = document.querySelector('#leancloud-post-views-container');
+        if (viewCtn || enableIncr) {
+          var target = decodeURI('/2020/11/12/38%20React.js%E4%B9%8BReact%20Hooks%E4%BD%BF%E7%94%A8/');
+          var viewGetter = getRecord(Counter, target).then((record) => {
+            incrArr.push(buildIncrement(record.objectId))
+            if (viewCtn) {
+              var ele = document.querySelector('#leancloud-post-views');
+              if (ele) {
+                ele.innerText = (record.time || 0) + 1;
+                viewCtn.style.display = 'inline';
+              }
+            }
+          });
+          getterArr.push(viewGetter);
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && increment(Counter, incrArr);
+        })
+      }
+    }
+
+    var app_id = '5o5Kl2LBm0PCREnMBGJPM7I8-gzGzoHsz'
+    var app_key = '34jqtpneAbJft4I56LcsIwlQ'
+    var server_url = 'https://5o5kl2lb.lc-cn-n1-shared.com'
+
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': app_id,
+            'X-LC-Key': app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+
+      addCount(Counter);
+    }
+
+    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(resp => resp.json())
+        .then(({api_server}) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "16 React.js之React Hooks使用&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
